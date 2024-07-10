@@ -46,21 +46,63 @@ class Snake:
         self.head.x += self.xdir * BLOCK_SIZE
         self.body.remove(self.head)
 
+class Apple:
+    def __init__(self):
+        self.x = int(random.radient(0, SW)/BLOCK_SIZE) * BLOCK_SIZE
+        self.y = int(random.radient(0, SH)/BLOCK_SIZE) * BLOCK_SIZE
+        self.rect = pygame.Rect(self.x, self.y, BLOCK_SIZE, BLOCK_SIZE)
+
+        def update(self):
+            pygame.draw.rect(screen, "Orange", self.rect)
+
 def draw_grid():
     for x in range(0, SW, BLOCK_SIZE):
         for y in range(0, SH, BLOCK_SIZE):
             rect = pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE)
             pygame.draw.rect(screen, "#3c3c3b", rect, 1)
 
-draw_grid()
+score = FONT.rencer("1", True, "White")
+score_rect = score.get_rect(center=(SW/2, SH/20))
 
-running = True
+draw_grid()
+snake = Snake()
+apple = Apple()
+
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.display.quit()
             pygame.quit()
             sys.exit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_DOWN:
+                snake.ydir = 1
+                snake.xdir = 0
+            elif event.key == pygame.K_UP:
+                snake.ydir = -1
+                snake.xdir = 0
+            elif event.key == pygame.K_RIGHT:
+                snake.ydir = 0
+                snake.xdir = 1
+            elif event.key == pygame.K_LEFT:
+                snake.ydir = 0
+                snake.xdir = -1
+    snake.update()
+    screen.fill('black')
+    draw_grid()
+    apple.update()
+    score = FONT.render(f"{len(snake.body) + 1}", True, "white")
+    pygame.draw.rect(screen, "green", snake.head)
+
+    for square in snake.body:
+        pygame.draw.rect(screen, "green", square)
+
+    screen.blit(score, score_rect)
+
+    if snake.head.x == apple.x and snake.head.y == apple.y:
+        snake.body.append(pygame.Rect(square.x, square.y, BLOCK_SIZE, BLOCK_SIZE))
+        apple = Apple()
 
     pygame.display.update()
     clock.tick(10)
