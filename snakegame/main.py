@@ -13,7 +13,7 @@ screen = pygame.display.set_mode((800, 800))
 pygame.display.set_caption("Snake")
 clock = pygame.time.Clock()
 
-class Snake:
+class Snake: # [Missing Docstring]
     def __init__(self):
         self.x, self.y = BLOCK_SIZE, BLOCK_SIZE
         self.xdir = 1
@@ -46,14 +46,14 @@ class Snake:
         self.head.x += self.xdir * BLOCK_SIZE
         self.body.remove(self.head)
 
-class Apple:
+class Apple: # [Missing Docstring]
     def __init__(self):
-        self.x = int(random.radient(0, SW)/BLOCK_SIZE) * BLOCK_SIZE
-        self.y = int(random.radient(0, SH)/BLOCK_SIZE) * BLOCK_SIZE
+        self.x = int(random.randint(0, SW)/BLOCK_SIZE) * BLOCK_SIZE
+        self.y = int(random.randint(0, SH)/BLOCK_SIZE) * BLOCK_SIZE
         self.rect = pygame.Rect(self.x, self.y, BLOCK_SIZE, BLOCK_SIZE)
 
-        def update(self):
-            pygame.draw.rect(screen, "Orange", self.rect)
+    def update(self):
+        pygame.draw.rect(screen, "Orange", self.rect)
 
 def draw_grid():
     for x in range(0, SW, BLOCK_SIZE):
@@ -89,10 +89,14 @@ while True:
                 snake.ydir = 0
                 snake.xdir = -1
     snake.update()
+
     screen.fill('black')
     draw_grid()
+
     apple.update()
+
     score = FONT.render(f"{len(snake.body) + 1}", True, "white")
+
     pygame.draw.rect(screen, "green", snake.head)
 
     for square in snake.body:
@@ -105,5 +109,5 @@ while True:
         apple = Apple()
 
     pygame.display.update()
-    clock.tick(10)
+    clock.tick(5)
     
