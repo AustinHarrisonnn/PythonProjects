@@ -11,6 +11,7 @@ FONT = pygame.font.Font(None, BLOCK_SIZE * 2)
 screen = pygame.display.set_mode((SW, SH))
 pygame.display.set_caption("Snake!")
 clock = pygame.time.Clock()
+running = True
 
 background_image = pygame.image.load('C:/Users/ausgood/Desktop/PythonProjects/assets/6104132.png').convert_alpha()
 FONT = pygame.font.Font(None, BLOCK_SIZE * 2)
@@ -69,7 +70,7 @@ def draw_grid():
 snake = Snake()
 apple = Apple()
 
-while True:
+while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
