@@ -4,14 +4,16 @@ import random
 
 pygame.init()
 
-SW, SH = 800, 800
-
 BLOCK_SIZE = 50
+SW, SH = 800, 800
 FONT = pygame.font.Font(None, BLOCK_SIZE * 2)
 
 screen = pygame.display.set_mode((SW, SH))
 pygame.display.set_caption("Snake!")
 clock = pygame.time.Clock()
+
+background_image = pygame.image.load('C:/Users/ausgood/Desktop/PythonProjects/assets/6104132.png').convert_alpha()
+FONT = pygame.font.Font(None, BLOCK_SIZE * 2)
 
 class Snake:
     def __init__(self):
@@ -51,7 +53,7 @@ class Apple:
     def __init__(self):
         self.x = random.randint(0, SW // BLOCK_SIZE - 1) * BLOCK_SIZE
         self.y = random.randint(0, SH // BLOCK_SIZE - 1) * BLOCK_SIZE
-        self.image = pygame.image.load('C:/Users/ausgood/Desktop/PythonProjects/snakegame/apple_15012111.png').convert_alpha()
+        self.image = pygame.image.load('C:/Users/ausgood/Desktop/PythonProjects/assets/apple_15012111.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (BLOCK_SIZE, BLOCK_SIZE))
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
     
@@ -88,9 +90,8 @@ while True:
 
     snake.update()
     
-    screen.fill('black')
+    screen.blit(background_image, (0,0))
     draw_grid()
-
     apple.update()
 
     score = FONT.render(f"{len(snake.body) + 1}", True, "white")
@@ -98,7 +99,6 @@ while True:
     screen.blit(score, score_rect)
 
     pygame.draw.rect(screen, "green", snake.head)
-
     for square in snake.body:
         pygame.draw.rect(screen, "green", square)
 
@@ -107,4 +107,4 @@ while True:
         apple = Apple()
 
     pygame.display.update()
-    clock.tick(5)
+    clock.tick(10)
